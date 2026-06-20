@@ -1,3 +1,5 @@
+import  NotFound  from "./not-found";
+
 type PostPageProps = {
     params: Promise<{ id: string }>
 }
@@ -7,6 +9,11 @@ export default async function PostPage({ params }: PostPageProps) {
     const { id } = await params;
     const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
     const post = await response.json();
+
+    if (!post.id) {
+        return <NotFound />;
+    }
+
   return (
     <article className="space-y-6">
       <div className="space-y-4">
